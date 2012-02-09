@@ -16,18 +16,18 @@ Create a confguration object. This object will contain a list of the nodes you w
 
 In order to configure a warp it is necessary to define a configuration object first. Below is a listing of all properties, some required and some optional.
 
-var object = {
-				path		: <Object> | <Array>,
-        		targets		: <Array>,			
-        		rotationMode: "rotate" | "skew" | "none", 
-        		kerning		: <length>,						
-        		showPath	: <boolean>,						
-        		indent		: <length>,						
-        		width		: <length>,	
-        		height		: <length>,	
-        		css			: <string<,				
-        		callback	: <function object>
-}
+    var object = {  
+    				path		: \<Object\> | \<Array\>,  
+            		targets		: \<Array\>,		  	
+            		rotationMode: "rotate" | "skew" | "none",   
+            		kerning		: \<length\>,	  					
+            		showPath	: \<boolean\>,  						
+            		indent		: \<length\>,  						
+            		width		: \<length\>,  	
+            		height		: \<length\>,  	
+            		css			: \<string\>,  				
+            		callback	: \<function object\>  
+    }
 
 ### path:
 
@@ -73,13 +73,13 @@ A callback function that will be executed after warping.
 
 Let's say we want to warp text around a circle. In this case we will define a cirle object and assign it to the "path" property of our configuration-object:
 
-path: {
-		radius: <number>,
-        center: <array>,
-        angle : <string>,
-        align: "center" | "left" | "right" string,
-        textPosition: "outside" | "inside"
-}
+    path: {  
+    		radius: \<number\>,  
+            center: \<array\>,  
+            angle : \<string\>,  
+            align: "center" | "left" | "right" string,  
+            textPosition: "outside" | "inside"  
+   }
 
 ### radius:
 
@@ -107,15 +107,15 @@ In this case an array representing the path must be assigned to the "path" prope
 
 - a canvas:
 
-ctx.moveTo(73, 400);
-ctx.bezierCurveTo(105, 370, 196, 314, 276, 359),
-ctx.bezierCurveTo(342, 397, 398, 375, 424, 327)
+    ctx.moveTo(73, 400);  
+    ctx.bezierCurveTo(105, 370, 196, 314, 276, 359),  
+    ctx.bezierCurveTo(342, 397, 398, 375, 424, 327)
 
 - must be formatted as
 
-path : [[73, 400],
-		[105, 370, 196, 314, 276, 359],
-		[342, 397, 398, 375, 424, 327]]
+    path : [[73, 400],  
+    		[105, 370, 196, 314, 276, 359],  
+    		[342, 397, 398, 375, 424, 327]]  
 
 ### Creating a bezier curve for csswarp.js with Illustrator:
 

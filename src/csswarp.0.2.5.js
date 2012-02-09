@@ -79,7 +79,6 @@
 			type, w, h, customCSS;
 			
 		(function init(){
-			THIS.config.lineHeight = 1.35;
 			THIS.config.indent = "0px";
 			THIS.config.kerning = "0px";
 			THIS.config.rotationMode = "rotate";
