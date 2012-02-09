@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Dynamic CSS Warp</title>
+<style>
+	body{
+		background-color:  white;
+		}
+	.anton{
+		font: 15px 'Anton', sans-seri;
+		}
+	}
+	
+	</style>
+		<script src="js/csswarp.0.2.5.js"></script>
+        
+        <script>
+          	WebFontConfig = {
+        	       google: { families: ['Anton::latin'] },
+        	        fontactive: function(fontFamily, fontDescription) {
+        	        	cssWarp(anton);
+        	       	}
+          	     };
+        	     
+        	     
+        	     (function() {
+        	       var wf = document.createElement('script');
+        	       wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        	           '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        	       wf.type = 'text/javascript';
+        	       wf.async = 'true';
+        	       var s = document.getElementsByTagName('script')[0];
+        	       s.parentNode.insertBefore(wf, s);
+        	     })();
+         	        	        		
+        	anton={
+        		path : [[640.0, 280.1],
+        		[640.0, 461.2, 493.2, 608.0, 312.0, 608.0],
+        		[140.0, 608.0, 0.5, 468.5, 0.5, 296.5],
+        		[0.5, 133.0, 133.0, 0.5, 296.5, 0.5],
+        		[451.8, 0.5, 577.6, 126.4, 577.6, 281.7],
+        		[577.6, 429.2, 458.0, 548.8, 310.5, 548.8],
+        		[170.4, 548.8, 56.8, 435.2, 56.8, 295.0],
+        		[56.8, 161.9, 164.7, 54.0, 297.8, 54.0],
+        		[424.3, 54.0, 526.8, 156.5, 526.8, 283.0],
+        		[526.8, 403.1, 429.4, 500.5, 309.3, 500.5],
+        		[195.1, 500.5, 102.6, 408.0, 102.6, 293.8],
+        		[102.6, 185.4, 190.5, 97.5, 299.0, 97.5],
+        		[402.0, 97.5, 485.5, 181.0, 485.5, 284.0],
+        		[485.5, 381.9, 406.1, 461.2, 308.3, 461.2],
+        		[215.3, 461.2, 139.9, 385.9, 139.9, 292.9],
+        		[139.9, 204.6, 211.5, 133.0, 299.9, 133.0],
+        		[383.8, 133.0, 451.8, 201.0, 451.8, 284.9],
+        		[451.8, 364.6, 387.2, 429.2, 307.5, 429.2],
+        		[231.7, 429.2, 170.3, 367.8, 170.3, 292.1],
+        		[170.3, 220.2, 228.7, 161.8, 300.6, 161.8],
+        		[368.9, 161.8, 424.4, 217.3, 424.4, 285.6],
+        		[424.4, 350.5, 371.7, 403.2, 306.8, 403.2],
+        		[245.1, 403.2, 195.1, 353.2, 195.1, 291.5],
+        		[195.1, 232.9, 242.6, 185.4, 301.2, 185.4],
+        		[356.9, 185.4, 402.0, 230.5, 402.0, 286.2],
+        		[402.0, 339.1, 359.1, 381.9, 306.2, 381.9],
+        		[256.0, 381.9, 215.3, 341.2, 215.3, 291.0],
+        		[215.3, 243.2, 254.0, 204.5, 301.7, 204.5],
+        		[347.0, 204.5, 383.8, 241.3, 383.8, 286.6],
+        		[383.8, 329.7, 348.9, 364.6, 305.8, 364.6],
+        		[264.9, 364.6, 231.7, 331.5, 231.7, 290.5],
+        		[231.7, 251.7, 263.2, 220.1, 302.1, 220.1],
+        		[339.0, 220.1, 369.0, 250.1, 369.0, 287.0],
+        		[369.0, 322.1, 340.5, 350.5, 305.4, 350.5],
+        		[272.1, 350.5, 245.1, 323.5, 245.1, 290.2],
+        		[245.1, 258.5, 270.8, 232.9, 302.4, 232.9],
+        		[332.5, 232.9, 356.9, 257.2, 356.9, 287.3],
+        		[356.9, 315.9, 333.7, 339.1, 305.1, 339.1],
+        		[278.0, 339.1, 256.0, 317.1, 256.0, 289.9],
+        		[256.0, 264.1, 276.9, 243.2, 302.7, 243.2],
+        		[327.2, 243.2, 347.1, 263.1, 347.1, 287.6],
+        		[347.1, 310.9, 328.2, 329.7, 304.9, 329.7],
+        		[282.8, 329.7, 264.9, 311.8, 264.9, 289.7],
+        		[264.9, 268.7, 281.9, 251.7, 302.9, 251.7],
+        		[322.9, 251.7, 339.0, 267.8, 339.0, 287.8],
+        		[339.0, 306.7, 323.7, 322.1, 304.7, 322.1],
+        		[286.7, 322.1, 272.1, 307.5, 272.1, 289.5],
+        		[272.1, 272.4, 286.0, 258.5, 303.1, 258.5],
+        		[319.3, 258.5, 332.5, 271.7, 332.5, 288.0],
+        		[332.5, 303.4, 320.0, 315.9, 304.6, 315.9],
+        		[289.9, 315.9, 278.0, 304.0, 278.0, 289.4],
+        		[278.0, 275.4, 289.3, 264.1, 303.2, 264.1],
+        		[316.5, 264.1, 327.2, 274.9, 327.2, 288.1],
+        		[327.2, 300.7, 317.0, 310.9, 304.4, 310.9],
+        		[292.5, 310.9, 282.8, 301.2, 282.8, 289.2],
+        		[282.8, 277.9, 292.0, 268.7, 303.3, 268.7],
+        		[314.1, 268.7, 322.9, 277.4, 322.9, 288.2],
+        		[322.9, 298.4, 314.6, 306.7, 304.3, 306.7],
+        		[294.6, 306.7, 286.7, 298.9, 286.7, 289.1],
+        		[286.7, 279.9, 294.2, 272.4, 303.4, 272.4]],
+        		targets		: ".anton",
+        		rotationMode: "rotate",
+        		bezAccuracy	: 0.002,
+        		revertBezier: false,
+        		kerning		: "1px",
+        		showPath	: false,
+        		indent		: "0em",
+        		width		: "610px",
+        		height		: "610px",
+        		css			: "margin: 50px auto; display: block"
+        		};
+        		
+        </script>
+        
+</head>
+
+<body id="body">
+
+<div id="demo" class="demo">
+	<p class="anton"><a href="#">Als</a> Gregor Samsa eines Morgens aus unruhigen Träumen erwachte, fand er sich in seinem Bett zu einem ungeheuren Ungeziefer verwandelt. Er lag auf seinem panzerartig harten Rücken und sah, wenn er den Kopf ein wenig hob, seinen gewölbten, braunen, von bogenförmigen Versteifungen geteilten Bauch, auf dessen Höhe sich die Bettdecke, zum gänzlichen Niedergleiten bereit, kaum noch erhalten konnte. Seine vielen, im Vergleich zu seinem sonstigen Umfang kläglich dünnen Beine flimmerten ihm hilflos vor den Augen. »Was ist mit mir geschehen?« dachte er. Es war kein Traum. Sein Zimmer, ein richtiges, nur etwas zu kleines Menschenzimmer, lag ruhig zwischen den vier wohlbekannten Wänden. Über dem Tisch, auf dem eine auseinandergepackte Musterkollektion von Tuchwaren ausgebreitet war – Samsa war Reisender –, hing das Bild, das er vor kurzem aus einer illustrierten Zeitschrift ausgeschnitten und in einem hübschen, vergoldeten Rahmen untergebracht hatte. Es stellte eine Dame dar, die, mit einem Pelzhut und einer Pelzboa versehen, aufrecht dasaß und einen schweren Pelzmuff, in dem ihr ganzer Unterarm verschwunden war, dem Beschauer entgegenhob. Gregors Blick richtete sich dann zum Fenster, und das trübe Wetter – man hörte Regentropfen auf das Fensterblech aufschlagen – machte ihn ganz melancholisch. »Wie wäre es, wenn ich noch ein wenig weiterschliefe und alle Narrheiten vergäße,« dachte er, aber das war gänzlich undurchführbar, denn er war gewöhnt, auf der rechten Seite zu schlafen, konnte sich aber in seinem gegenwärtigen Zustand nicht in diese Lage bringen. Mit welcher Kraft er sich auch auf die rechte Seite warf, immer wieder schaukelte er in die Rückenlage zurück. Er versuchte es wohl hundertmal, schloß die Augen, um die zappelnden Beine nicht sehen zu müssen, und ließ erst ab, als er in der Seite einen noch nie gefühlten, leichten, dumpfen Schmerz zu fühlen begann.
+	<p>
+</div>
+</body>
+</html>
