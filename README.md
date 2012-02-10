@@ -16,7 +16,7 @@ Create a confguration object. This object will contain a list of the nodes you w
 
 In order to configure a warp it is necessary to define a configuration object first. Below is a listing of all properties, some required and some optional.
 
-    var object = {  
+    var myWarp = {  
     				path		: <Object> | <Array>,  
             		targets		: <Array>,		  	
             		rotationMode: "rotate" | "skew" | "none",   
@@ -29,21 +29,25 @@ In order to configure a warp it is necessary to define a configuration object fi
             		callback	: <function object>  
     }
 
+You the call the warp function and pass object as an argumet:
+
+    cssWarp(myWarp);
+    
 ### path:
 
 Required. Either a circle object that defines circle properties (see below "warp around a circle") or an array containing coordinates of a bezier path (see below "warp around a bezier curve") must be assigned. If this property is missing or wrong formatted cswarp will throw an error.
 
 ### targets:
 
-Required. An array with strings containing one or more dom objects. The name of html tags, classnames or IDs can be provided. 
+Required. An array with strings containing the names of one or more dom objects. The name of html tags, classnames or IDs can be provided. 
 
 ### rotationMode:
 
-This property defines the way text will be distorted along a path. Default value is "rotate". If you want your text to be skewed vertically choose "skew". For text that stays undistorted and follows the path stepwise, use "none";
+This property defines the way text will be distorted along a path. Default value is "rotate". If you want your text to be skewed vertically choose "skew". For text that stays undistorted and follows the path stepwise, use "none".
 
 ### kerning:
 
-Optional. A string defining distance between letters, i.e "0.2em". Units can be px, em, ex, gd, rem, vw, vh, vm, mm, cm, in, pt, ch, pc. Default value is "0px"
+Optional. A string defining distance between letters, i.e "0.2em". Units can be px, em, ex, gd, rem, vw, vh, vm, mm, cm, in, pt, ch, pc. Default value is "0px".
 
 ### indent:
 
