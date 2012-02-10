@@ -29,7 +29,7 @@ In order to configure a warp it is necessary to define a configuration object fi
             		callback	: <function object>  
     }
 
-You the call the warp function and pass object as an argumet:
+You the call the warp function and pass "myWarp" as an argumet:
 
     cssWarp(myWarp);
     
