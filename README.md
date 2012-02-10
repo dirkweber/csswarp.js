@@ -1,11 +1,11 @@
 # csswarp.js: "warp" HTML text around an arbitrary path.
 ----------
 
-csswarp.js is a small (<8kb minified unzipped) javascript library for warping any HTML text around an arbitrary path.  Text will look as if it were created with Illustrator's attach to Path tool. Anyway it is pure HTML text that can be copied and crawled and styled with CSS. csswarp works standalone and does not rely on jQuery or another library (a jQuery plugin is in the works though). csswarp.js offers an extensive set of settings to adjust text warping. Right now it will work in every modern browser that supports css3 transforms. Support for IE versions <9 is planned for a future release.
+csswarp.js is a small (<8kb minified unzipped) javascript library for warping any HTML text around an arbitrary path.  Text will look as if it were created with Illustrator's attach to Path tool. Anyway it is pure HTML text that can be styled with CSS, copied and crawled. csswarp works standalone and does not rely on jQuery or another library (a jQuery plugin is in the works though). csswarp.js offers an extensive set of settings to adjust text warping. Right now it will work in every modern browser that supports css3 transforms. Support for IE versions <9 is planned for a future release.
 
 ## How does it work?
 
-The script parses the DOM for nodes that should be warped. It then will transform every letter with CSS3 transfoms, so that the text follows an imaginary path.
+The script parses the DOM for nodes that should be warped. It then will transform every letter with CSS3 transfoms, giving the illusion of text following an imaginary path.
 
 ## How to use csswarp.js:
 
@@ -14,7 +14,7 @@ Create a confguration object. This object will contain a list of the nodes you w
 
 ## Configuring csswarp.js:
 
-In order to configure a warp it is necessary to define a configuration object first. Below is a listing of all properties, some required and some optional.
+In order to configure a warp, you will need to define a configuration object first. Below is a listing of all properties, some are required most are optional.
 
     var myWarp = {  
     				path		: <Object> | <Array>,  
@@ -29,13 +29,13 @@ In order to configure a warp it is necessary to define a configuration object fi
             		callback	: <function object>  
     }
 
-You the call the warp function and pass "myWarp" as an argumet:
+In a second step you will call the cssWarp() function and pass "myWarp" as an argumet:
 
     cssWarp(myWarp);
     
 ### path:
 
-Required. Either a circle object that defines circle properties (see below "warp around a circle") or an array containing coordinates of a bezier path (see below "warp around a bezier curve") must be assigned. If this property is missing or wrong formatted cswarp will throw an error.
+Required. Either a javascript object that defines circle properties (see below "warp around a circle") or an array containing the coordinates of bezier control points (see below "warp around a bezier curve") must be assigned. If this property is missing or wrongly formatted, cswarp will throw an error.
 
 ### targets:
 
@@ -81,7 +81,7 @@ Let's say we want to warp text around a circle. In this case we will define a ci
     		radius: <number>,  
             center: <array>,  
             angle : <string>,  
-            align: "center" | "left" | "right" string,  
+            align: "center" | "left" | "right",  
             textPosition: "outside" | "inside"  
     }
 
@@ -138,7 +138,7 @@ Be cautious: a smaller value means more computations so text needs longer time f
 
 ## Some notes:
 
-Bezier calculations can be computationally expensive. Use not too long texts, keep paths short and simple, with only as much segments as are needed.
+Bezier calculations can be computationally expensive. Use not too long texts, keep paths short and simple, with only as much segments as needed.
 
 ## Outlook:
 
