@@ -1,7 +1,7 @@
 # csswarp.js: "warp" HTML text around an arbitrary path.
 ----------
 
-csswarp.js is a small (<8kb minified unzipped) javascript library for warping any HTML text around an arbitrary path.  Text will look as if it were created with Illustrator's attach to Path tool. Anyway it is pure HTML text that can be styled with CSS, copied and crawled. csswarp works standalone and does not rely on jQuery or another library (a jQuery plugin is in the works though). csswarp.js offers an extensive set of settings to adjust text warping. Right now it will work in every modern browser that supports css3 transforms. Support for IE versions <9 is planned for a future release.
+csswarp.js is a small (<8kb minified unzipped) javascript library for warping any HTML text around an arbitrary path.  Text will look as if it were created with Illustrator's attach-to-path tool. Anyway it is pure HTML text that can be styled with CSS, copied and crawled. csswarp works standalone and does not rely on jQuery or another library (a jQuery plugin is in the works though). csswarp.js offers an extensive number of settings to adjust text warping. Right now it will work in every modern browser that supports css3 transforms. Support for IE versions <9 is planned for a future release.
 
 ## How does it work?
 
@@ -10,7 +10,7 @@ The script parses the DOM for nodes that should be warped. It then will transfor
 ## How to use csswarp.js:
 
 Put a reference to the script into the head or to the end of your HTML doc.
-Create a confguration object. This object will contain a list of the nodes you want to warp, info about kerning, indent, alignment and more. Make sure that the font has been completely loaded, then call the script with said object as an argument.
+Create a configuration object. This object will contain a list of the nodes you want to warp, info about kerning, indent, alignment and more. Make sure that the font has been completely loaded, then call the script with said object as an argument.
 
 ## Configuring csswarp.js:
 
@@ -21,7 +21,7 @@ In order to configure a warp, you will need to define a configuration object fir
             		targets		: <Array>,		  	
             		rotationMode: "rotate" | "skew" | "none",   
             		kerning		: <length>,	  					
-            		showPath	: <boolean>,  						
+            		showPath	: {width: number, color: string},  						
             		indent		: <length>,  						
             		width		: <length>,  	
             		height		: <length>,  	
@@ -29,7 +29,7 @@ In order to configure a warp, you will need to define a configuration object fir
             		callback	: <function object>  
     }
 
-In a second step you will call the cssWarp() function and pass "myWarp" as an argumet:
+In a second step you will call the cssWarp() function and pass "myWarp" as an argument:
 
     cssWarp(myWarp);
     
@@ -47,15 +47,20 @@ This property defines the way text will be distorted along a path. Default value
 
 ### kerning:
 
-Optional. A string defining distance between letters, i.e "0.2em". Units can be px, em, ex, gd, rem, vw, vh, vm, mm, cm, in, pt, ch, pc. Default value is "0px".
+Optional. A string defining distance between letters, e.g. "0.2em". Units can be px, em, ex, gd, rem, vw, vh, vm, mm, cm, in, pt, ch, pc. Default value is "0px".
 
 ### indent:
 
-Optional. A text-indent, i.e "2cm". px, em, ex, gd, rem, vw, vh, vm, mm, cm, in, pt, ch, pc are allowed units.
+Optional. A text-indent, e.g. "2cm". px, em, ex, gd, rem, vw, vh, vm, mm, cm, in, pt, ch, pc are allowed units.
 
 ### showPath:
 
-Optional. This will display the path as a 1px black stroke. Its main purpose is development and debugging.
+Optional. This will display the path. Its main purpose is development and debugging. A javascript object with properties for thickness and color are accepted, e.g.:
+
+    showPath : {  
+    				color		: "red",  
+            		thickness	: 3  
+    }
 
 ### width:
 
@@ -67,11 +72,11 @@ Optional. Same as height, a number that defines the width of the container after
 
 ### css:
 
-Optional. A custom css that will appear after warping. This way you have better control over the appearance in case no warping took place, i.e. because the browser did not support transforms or javascript was disabled. Check the examples without the script to see the difference.
+Optional. A custom css that will appear after warping. This way you have better control over the appearance in case no warping took place, e.g. because the browser did not support transforms or javascript was disabled. Check the examples without the script to see the difference.
 
 ### callback:
 
-A callback function that will be executed after warping.
+Optional, a callback function that will be executed after warping.
 
 ## Configuring a warp around a circle:
 
@@ -91,11 +96,11 @@ Required. A number containing the px value for the circle radius must be provide
 
 ### center:
 
-Optional. An array containing numbers for the x and y position of the center, i.e [120, 230]. If no value is provided here the circle will be centered horizontally and vertically.
+Optional. An array containing numbers for the x and y position of the center, e.g.[120, 230]. If no value is provided here the circle will be centered horizontally and vertically.
 
 ### angle:
 
-Optional. A string containing the value for the rotation-angle in degree or radian, i. e. "0.65rad" or "45deg". The rotation is executed clockwise with 0deg at 12:00. Default value is "0rad".
+Optional. A string containing the value for the rotation-angle in degree or radian, e.g. "0.65rad" or "45deg". The rotation is executed clockwise with 0deg at 12:00. Default value is "0rad".
 
 ### align: 
 
@@ -128,17 +133,19 @@ In this case an array representing the path must be assigned to the "path" prope
 Draw your path in Illustrator and export it as "canvas".
 Open the exported html in an editor, look for the canvas-commands and copy the values into an array as described above.
 
-### Further properties: 
+### More configuraton options: 
 
-- "bezAccuracy" (optional) defines the accuracy of text metrics on a bezier curve. Default value is 0.002. Usually values between 0.002 - 0.006 are o.k. most of the time, but for small text it can be necessary to use smaller values.
+These properties are optional and can be added to the configuration object:
 
-Be cautious: a smaller value means more computations so text needs longer time for rendering.
+#### "bezAccuracy" (optional) defines the accuracy of text metrics on a bezier curve. Default value is 0.004. Usually values between 0.002 - 0.006 are o.k. most of the time, but for small text it can be necessary to use smaller values.
 
-- "revertBezier", well, reverts the direction of a bezier.
+Be cautious: a smaller value means more computations so text needs more time for rendering.
+
+#### "revertBezier" (optional), well, reverts the direction of a bezier.
 
 ## Some notes:
 
-Bezier calculations can be computationally expensive. Use not too long texts, keep paths short and simple, with only as much segments as needed.
+Bezier calculations can be computationally expensive. Avoid long texts. Paths should be as simple as possible, with only as much segments as absolutely needed.
 
 ## Outlook:
 
@@ -152,6 +159,7 @@ Things I have planned for next releases:
 
 ## License
 
-flattensvg.js is licensed under the terms of the MIT License, see the included MIT-LICENSE file.
+csswarp.js is licensed under the terms of the MIT License.
+http://www.eleqtriq.com/wp-content/static/licenses/MIT-LICENSE.txt
 
 More infos and demos on www.eleqtriq.com

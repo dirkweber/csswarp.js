@@ -150,7 +150,7 @@
 						break;
 				}
 				if(THIS.config.callback){THIS.config.callback();}
-				if(THIS.config.showPath){createBackgroundImage(THIS.config.targets[i], i, w, h);}
+				if(THIS.config.showPath){createBackgroundImage(THIS.config.targets[i], i, w, h, THIS.config.showPath);}
 			}
 		})();
 		
@@ -281,7 +281,6 @@
  					letters			= getTextMetrics(node),
  					arcLength		= 0,
  					angleIncr		= 0,
- 					//THAT			= this,
  					arcDir			= 1,
  					coords, angle;
  					 			
@@ -447,12 +446,10 @@
 			}
 		}
 				
-		function createBackgroundImage(target, id, w, h){
-			var canvas, ctx, currentBG;
-			if(typeof THIS.config.path === "string" && /\.svg\s*$/gi.test(pathObj)){
-				setStyle(target, "background", "url("+THIS.config.path+") no-repeat");
-				return;
-			}
+		function createBackgroundImage(target, id, w, h, obj){
+			var canvas, ctx, currentBG,
+				strokeWidth = obj.thickness || 1.
+				strokeColor = obj.color || "black";
 			
 			currentBG = getStyle(target, "background-image");
 			
@@ -475,7 +472,8 @@
 					
 				if (canvas.getContext){
 					ctx = canvas.getContext('2d');
-					
+					ctx.strokeStyle = strokeColor;
+					ctx.lineWidth = strokeWidth;
 					switch(type){
 					 	case "bezier":
 						 	drawBezier(ctx, THIS.config.path);
