@@ -137,11 +137,15 @@ Open the exported html in an editor, look for the canvas-commands and copy the v
 
 These properties are optional and can be added to the configuration object:
 
-#### "bezAccuracy" (optional) defines the accuracy of text metrics on a bezier curve. Default value is 0.004. Usually values between 0.002 - 0.006 are o.k. most of the time, but for small text it can be necessary to use smaller values.
+#### bezAccuracy (optional): 
+
+defines the accuracy of text metrics on a bezier curve. Default value is 0.004. Usually values between 0.002 - 0.006 are o.k. most of the time, but for small text it can be necessary to use smaller values.
 
 Be cautious: a smaller value means more computations so text needs more time for rendering.
 
-#### "revertBezier" (optional), well, reverts the direction of a bezier.
+#### revertBezier  (optional): 
+
+Well, reverts the direction of a bezier.
 
 ## Some notes:
 
