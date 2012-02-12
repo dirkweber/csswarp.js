@@ -21,7 +21,7 @@ In order to configure a warp, you will need to define a configuration object fir
             		targets		: <Array>,		  	
             		rotationMode: "rotate" | "skew" | "none",   
             		kerning		: <length>,	  					
-            		showPath	: {width: number, color: string},  						
+            		showPath	: {thickness: number, color: string},  						
             		indent		: <length>,  						
             		width		: <length>,  	
             		height		: <length>,  	
