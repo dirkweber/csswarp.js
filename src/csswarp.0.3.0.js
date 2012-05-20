@@ -7,6 +7,7 @@
  */
  
  (function(){
+ 
 	var warpedTexts = [],
 		userAgent	= navigator.userAgent.toLowerCase(),
 	    prefix 		= cssPref = "",
@@ -54,10 +55,10 @@
 	}
 	
 	cssWarp = function(){
-		if(hasTransform){	
-			for(var i=0, l=arguments.length; i<l; i++){
-				warpedTexts[i] = new WarpMachine(arguments[i]);
-			}
+		if(!hasTransform){return};
+		
+		for(var i=0, l=arguments.length; i<l; i++){
+			warpedTexts[i] = new WarpMachine(arguments[i]);
 		}
 	}
 	
@@ -67,8 +68,9 @@
 	}
 	
 	WarpMachine.prototype.setUp = function(conf){
-		var THIS 	  = this,
-			warpCSS = function(letters, transform){
+		var THIS	= this,
+			shadowVal,
+			warpCSS	= function(letters, transform){
 							return	"display: block;"+
 									"visibility: visible;"+
 									"width:"+letters.width+"px;"+
@@ -76,17 +78,18 @@
 									prefix+"transform-origin: 50% "+letters.base+"px; "+
 									prefix+"transform: "+transform+";"
 						},
-			type, w, h, customCSS;
+			type, customCSS;
 			
 		(function init(){
 			THIS.config.indent = "0px";
 			THIS.config.kerning = "0px";
 			THIS.config.rotationMode = "rotate";
+			THIS.config.fixshadow = true;
 			
 			for(var prop in conf){
 		    	THIS.config[prop] = conf[prop];
 			}
- 		
+ 			
 			THIS.config.targets = (function(){
 				var targets = conf.targets.replace(/\s*/g, "").split(","),
 					nodes	= [],
@@ -125,18 +128,42 @@
 				throw new Error('ERROR: no valid path found in config Object');
 				return;
 			}
-				
 			
 			for(var i=0, l=THIS.config.targets.length; i<l; i++){
-				w = THIS.config.width || "auto";  
-				h = THIS.config.height || "auto";  
-				
-				setStyle(THIS.config.targets[i], "width", w);
-				setStyle(THIS.config.targets[i], "height", h);
-				
 				if(THIS.config.css){
 					customCSS = THIS.config.targets[i].style.cssText+";"+THIS.config.css;
 					THIS.config.targets[i].style.cssText = customCSS;
+				}
+				
+				if(!(THIS.config.fixshadow === false)){
+					THIS.config.shadows = [];
+					shadowVal = getStyle(THIS.config.targets[i], "text-shadow");
+
+					if(shadowVal !== "" && shadowVal !== "none"){
+						var cols = shadowVal.match(/r.*?\)/gi);
+					
+						shadowVal = shadowVal.replace(/r.*?\)/gi, "").split(",");
+						
+						shadowVal.forEach(function(value, index){
+								var x, y, blur, radius;
+								
+								shadowVal[index] = value.replace(/^\s*/, "").split(/px\s+/g);
+								x 		= parseFloat(shadowVal[index][0]);								
+								y 		= parseFloat(shadowVal[index][1]);
+								blur 	= parseFloat(shadowVal[index][2]);
+ 								radius	= Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+ 								angle	= Math.atan2(y, x);
+ 								
+								THIS.config.shadows[index] = {
+													col		: cols[index],
+													blur	: blur,
+													x 		: x,
+													y 		: y,
+													radius	: radius,
+													angle	: angle
+													};
+								});
+					};
 				}
 				
 				switch(type){
@@ -149,20 +176,24 @@
 					default:
 						break;
 				}
+				
 				if(THIS.config.callback){THIS.config.callback();}
-				if(THIS.config.showPath){createBackgroundImage(THIS.config.targets[i], i, w, h, THIS.config.showPath);}
+				if(THIS.config.showPath){drawPath(THIS.config.targets[i], i);}
 			}
 		})();
 		
 		function attach2Bezier(node) {
-				var bez				= [].concat(THIS.config.path),
+ 				var bez				= [].concat(THIS.config.path),
 					letters			= getTextMetrics(node),
 					letterCount		= 0,
 					firstLetterPos	= letters.indent-letters[0].width/2,
-					letterPos		= firstLetterPos;
-				
+					letterPos		= firstLetterPos,
+					curveStepCount	= 0,
+					arcStart		= 0,
+					bezRes			= THIS.config.bezAccuracy || 0.004;
 				
 				bez[0] = [0,0,0,0].concat(bez[0]);
+				
 				if(THIS.config.revertBezier){revertBez();};
 								
 				for (var i=0, l=bez.length-1; i<l; i++){
@@ -175,11 +206,11 @@
 					}
 				}
 				
+				return;
+				
 				function revertBez(){
-					var newBez	= [],
+					var newBez	= [[0,0,0,0]],
 						length 	= bez.length;
-						
-					newBez[0] = [0,0,0,0];
 						
 					for (var l=length-1, i=0; l>i; l--){
 						newBez[length-l] = [];
@@ -190,6 +221,7 @@
 						newBez[length-l][2] = bez[l][0];
 						newBez[length-l][3] = bez[l][1];
 					}
+					
 					newBez[length-l-1][4] = bez[l][4];
 					newBez[length-l-1][5] = bez[l][5];
 					
@@ -199,10 +231,10 @@
 				function transform(index){
 					letterPos+= letters[index].width/2;
 					
-					var arcVals	= calcLetterTransform(segment, letterPos),
+					var arcVals	= calcLetterTransform(segment),
 						coords, angle;
-					
-					if(arcVals[2]){
+						
+ 					if(arcVals[2]){
 						letterPos-= arcVals[3]+letters[index].width/2; 
 						return true;
 					}
@@ -214,41 +246,43 @@
 					letterPos+= letters.kerning + letters[index].width/2;
 					letterCount	++;
 
-					return [arcVals[2], arcVals[3]];
+					return arcVals[2];
 				}
 				
-				function calcLetterTransform(segment, l, accuracy){
-					var step	= THIS.config.bezAccuracy || 0.004, //accuracy of length determination. 
-													 //0.001-0.006 are o.k. Decrease for small font-sizes.
-						length	= 0,
-						arcLgt	= l,
-						sp		= findPointOnCurve(segment,0),
+				function calcLetterTransform(segment){
+					
+					var length	= arcStart,
+						arcLgt	= letterPos,
+						sp		= findPointOnCurve(segment,curveStepCount),
 						increase= false,
 						ep;
 					
-					for(var i=step; i<1; i+= step){
+					for(var i=curveStepCount+bezRes; i<1; i+= bezRes){
 						ep 		= findPointOnCurve(segment,i);
 						length+= Math.sqrt(Math.pow((sp[0]-ep[0]),2) + Math.pow((sp[1]-ep[1]),2));
 						sp		= ep;
-						if(length >= arcLgt){break;}
+						if(length >= arcLgt){curveStepCount = i; arcStart = arcLgt; break;}
 					}
 					
-					if(i>=1){increase = true;}
+					if(i>=1){
+						curveStepCount = arcStart = 0; 
+						increase = true;
+					}
+					
 					angle = calcAngle(segment, i);
 					return [ep, angle, increase, length];
 				}
 				
 				function findPointOnCurve(segment, u){
-					var curve 	= segment,
-						x 		= Math.pow(u,3)*(curve[2]+3*(curve[4]-curve[6])-curve[0])
-								  +3*Math.pow(u,2)*(curve[0]-2*curve[4]+curve[6])
-								  +3*u*(curve[4]-curve[0])+curve[0],
+					var x 		= Math.pow(u,3)*(segment[2]+3*(segment[4]-segment[6])-segment[0])
+								  +3*Math.pow(u,2)*(segment[0]-2*segment[4]+segment[6])
+								  +3*u*(segment[4]-segment[0])+segment[0],
 														 
-						y 		= Math.pow(u,3)*(curve[3]+3*(curve[5]-curve[7])-curve[1])
-								  +3*Math.pow(u,2)*(curve[1]-2*curve[5]+curve[7])
-								  +3*u*(curve[5]-curve[1])+curve[1];
+						y 		= Math.pow(u,3)*(segment[3]+3*(segment[5]-segment[7])-segment[1])
+								  +3*Math.pow(u,2)*(segment[1]-2*segment[5]+segment[7])
+								  +3*u*(segment[5]-segment[1])+segment[1];
 								
-					return [x.toFixed(2), y.toFixed(2)+30];
+					return [x.toFixed(4), y.toFixed(4)];
 				}
 					
 				function calcAngle(curve, t) {
@@ -265,7 +299,7 @@
 							angle	= Math.atan((h_3[1]-h_4[1])/(h_3[0]-h_4[0]))-(2*Math.PI);
 							if(h_4[0]<h_3[0]){angle-= Math.PI;}
 							
-						return (angle.toFixed(2));
+						return (angle.toFixed(4));
 					}
 					
 				function interPolatePoint(p1, p2, d){
@@ -348,35 +382,54 @@
  		}
  		
  		function applyTransforms(letters, index, coords, angle){
- 			var rotation	 = " rotate("+angle+"rad)",
- 				width 		 = letters[index].width,
+ 			var width 		 = letters[index].width,
  				height 		 = letters[index].height,
  				top 		 = coords[1]-letters.base,
  				left 		 = coords[0]-width/2,
  				cssTransform = "translate("+left+"px, "+top+"px)";
- 					
+ 						
  			switch(THIS.config.rotationMode){
  					case "rotate":
- 						cssTransform+= " "+rotation;
+ 						cssTransform+= " rotate("+angle+"rad)";
  						break;
  					case "skew":
  						var skewX	= "skewX("+ angle+"rad)",
- 							scale	= "scaleY("+Math.cos(angle).toFixed(2)+")";
- 						cssTransform+=  " "+rotation+" "+skewX+" "+scale;
+ 							scale	= "scaleY("+Math.cos(angle).toFixed(4)+")";
+ 						cssTransform+=  " rotate("+angle+"rad) "+skewX+" "+scale;
  						break;
  					default:
  						break;
  			}
  			
  			letters[index].elem.style.cssText+= warpCSS(letters, cssTransform);
+ 
+ 			if(THIS.config.hasOwnProperty("shadows") && THIS.config.shadows.length>0 ){
+ 				letters[index].elem.style.cssText+= fixShadow(angle);
+ 			}	
  		}
- 					 					
+ 		
+ 		function fixShadow(angle){
+ 			var shadows = THIS.config.shadows,
+ 				val 	= "",
+ 				x, y, alpha;
+ 				
+ 			for(var i=0, l=shadows.length; i<l; i++){
+ 				alpha = shadows[i].angle-angle;
+  				x = Math.cos(alpha)*shadows[i].radius;
+ 				y = Math.sin(alpha)*shadows[i].radius;
+ 				val+= x+"px "+y+"px "+shadows[i].blur+"px "+shadows[i].col;
+ 				if(i<l-1){val+= ", "};
+ 			}
+ 			return val;
+ 		}
+ 			 					
  		function getTextMetrics(node){
-			var text 	= node.textContent,
-				letters = [],
-				testCSS = "overflow: visible; white-space:pre;",
-				baseCSS= "position: absolute; display: block; visibility: hidden;"+
-						 "margin: 0px; border: 0px; padding: 0px;",
+			var text 		= node.textContent,
+				letters 	= [],
+				letterCSS	= "overflow: visible; white-space:pre;",
+				baseCSS 	= "position: absolute; display: block; visibility: hidden;"+
+						 	  "margin: 0px; border: 0px; padding: 0px;",
+				kerning		= getStyle(node, "letter-spacing"),
 				letter;
 				
 			letters.lngt = 0;
@@ -387,7 +440,7 @@
 				letters[i] = {};
 				letter = document.createTextNode(text.charAt(i));
 				letters[i].elem = document.createElement("span");
-				letters[i].elem.setAttribute("style", baseCSS+testCSS);
+				letters[i].elem.setAttribute("style", baseCSS+letterCSS);
 				letters[i].elem.appendChild(letter);
 				node.appendChild(letters[i].elem);
 				letters[i].width = letters[i].elem.offsetWidth;
@@ -396,23 +449,24 @@
 				letters.lngt+= letters[i].width;
 			}
 				
-			letters.kerning = calcWidth("kerning");
+			letters.kerning = kerning!=="normal" ? parseInt(kerning) : 0;
 			letters.indent = calcWidth("indent");
 			letters.base = calcBaseline();
 			letters.lngt+= i*letters.kerning;
 			
-			return letters;
+ 			return letters;
 				
 			function calcBaseline(){
 					var testDiv = document.createElement("div"),
 						img = document.createElement("img"),
-						lineHeight = getStyle(node, "lineHeight");
+						lineHeight = getStyle(node, "lineHeight"),
+						base;
 						
 					img.width = 1;
 					img.height = 1;
 					img.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
 					img.style.verticalAlign = "baseline";
-					img.style.display = "inline";
+					img.style.display = "inline";	
 					testDiv.style.cssText = baseCSS+'height:'+letters[0].height+';line-height:'+lineHeight+'px;';
 					testDiv.innerHTML="M";
 					testDiv.appendChild(img);
@@ -427,9 +481,7 @@
 						testDiv, w, 
 						unit = /em|ex|gd|rem|vw|vh|vm|mm|cm|in|pt|ch|pc|%/gi;
 						
- 					if(!attr){
-						return 0;
-					}else if(unit.test(val)){
+ 					if(unit.test(val)){
 						testDiv = document.createElement("div");
 						node.appendChild(testDiv);
 						testDiv.setAttribute("style", baseCSS);
@@ -446,26 +498,28 @@
 			}
 		}
 				
-		function createBackgroundImage(target, id, w, h, obj){
-			var canvas, ctx, currentBG,
-				strokeWidth = obj.thickness || 1.
-				strokeColor = obj.color || "black";
+		function drawPath(target, id){
+			var canvas, ctx, currentBG, w, h, btmCache,
+				strokeWidth = THIS.config.showPath.thickness || 1,
+				strokeColor = THIS.config.showPath.color || "black",
+				style 		= target.style.cssText;
 			
 			currentBG = getStyle(target, "background-image");
 			
- 			if(w === "auto" || h === "auto"){
-				w = w==="auto" ? target.offsetWidth : parseInt(w);
-				h = h==="auto" ? target.offsetheight : parseInt(h);
+			if(/width/gi.test(style) && /height/gi.test(style)){
+				w = target.offsetWidth;
+				h = target.offsetHeight;
 				setStyle(target, "backgroundImage", "url("+createBitmap(w, h)+"), "+currentBG);
 			}else{
-				if(THIS.config.btmCache === undefined){
-					THIS.config.btmCache = createBitmap(parseInt(w), parseInt(h));
+				if(btmCache === undefined){
+					THIS.config.btmCache = createBitmap(target.offsetWidth, target.offsetHeight);
 				}
 				setStyle(target, "backgroundImage", "url("+THIS.config.btmCache+"), "+currentBG);
 				return;
 			}
 			
 			function createBitmap(width, height){
+
 				canvas = document.createElement("canvas");			
 				canvas.width = width;
 				canvas.height = height;
@@ -486,6 +540,7 @@
 				}
 				
 				function drawBezier(ctx, path){
+				
 					ctx.beginPath();
 					ctx.moveTo(path[0][0],path[0][1]);
 					for(var i=1, l=path.length; i<l; i++){

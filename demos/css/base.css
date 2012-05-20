@@ -33,7 +33,8 @@ body{
 	font: 50px 'Anton', sans-serif;
 	text-transform: uppercase;
 	color:  #2d7a5e;
-	text-shadow: 4px 4px 0px #740F1D;
+	letter-spacing: 6px;
+	text-shadow: 0.1em 0em 0px #740F1D;
 }
 
 .anton_l {
@@ -44,15 +45,7 @@ body{
 .anton_r {
 display:  inline-block;
 }
-/*
-.anton_r::after{
-	content: ".";
-	visibility:  hidden;
-	clear: both;
-	width:  1px;
-	height:  1px;
-}*/
-
+  
 #ampersand{
 	display:  inline-block;
 	margin:  -70px 8px 0px 5px;
@@ -72,6 +65,7 @@ display:  inline-block;
 	text-transform: uppercase;
 	color:  #F4E8C0;
 	text-shadow: 3px 3px 0px #977321;
+	letter-spacing: 1px;
 }
 
 #demo{

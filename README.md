@@ -14,17 +14,15 @@ Create a configuration object. This object will contain a list of the nodes you 
 
 ## Configuring csswarp.js:
 
-In order to configure a warp, you will need to define a configuration object first. Below is a listing of all properties, some are required most are optional.
+In order to configure a warp, you will need to define a configuration object first. Below is a listing of all properties, some are required, most are optional.
 
     var myWarp = {  
     				path		: <Object> | <Array>,  
             		targets		: <Array>,		  	
             		rotationMode: "rotate" | "skew" | "none",   
-            		kerning		: <length>,	  					
-            		showPath	: {thickness: number, color: string},  						
-            		indent		: <length>,  						
-            		width		: <length>,  	
-            		height		: <length>,  	
+            		indent		: <length>,	  					
+            		showPath	: {thickness: <number>, color: <string>}, 
+            		fixShadow	: <boolean>,
             		css			: <string>,  				
             		callback	: <function object>  
     }
@@ -45,10 +43,6 @@ Required. An array with strings containing the names of one or more dom objects.
 
 This property defines the way text will be distorted along a path. Default value is "rotate". If you want your text to be skewed vertically choose "skew". For text that stays undistorted and follows the path stepwise, use "none".
 
-### kerning:
-
-Optional. A string defining distance between letters, e.g. "0.2em". Units can be px, em, ex, gd, rem, vw, vh, vm, mm, cm, in, pt, ch, pc. Default value is "0px".
-
 ### indent:
 
 Optional. A text-indent, e.g. "2cm". px, em, ex, gd, rem, vw, vh, vm, mm, cm, in, pt, ch, pc are allowed units.
@@ -62,17 +56,13 @@ Optional. This will display the path. Its main purpose is development and debugg
             		thickness	: 3  
     }
 
-### width:
+### fixShadow
 
-Optional. A number that defines the width of the container after warping. Of course the width can be defined in a stylesheet as well, but sometimes it's useful to have this value only in place when the browser has transformed the text, so that the appearance in browsers that do not support CSS3 transforms or with javascript disabled display the container differently. If there's no value provided here, the offset-width of the container will be used. Attention: the width will only be determined on first execution of csswarp, dynamic containers will not be updated on resize.
-
-### height:
-
-Optional. Same as height, a number that defines the width of the container after warping. If no value is provided here, the offset-height of the node will be used. Attention: the height will only be determined on first execution of csswarp, dynamic containers will not be updated on resize.
+Optional boolean value, default is "true". If set to "false", shadows of rotated elements will be rotated with every letter. The shadow will not be calculated according to a "global" lightsource anymore.
 
 ### css:
 
-Optional. A custom css that will appear after warping. This way you have better control over the appearance in case no warping took place, e.g. because the browser did not support transforms or javascript was disabled. Check the examples without the script to see the difference.
+Optional. A custom css that will appear after warping. This gives you better control over the appearance in case no warping took place, e.g. because the browser did not support transforms or javascript was disabled. It is recommended to configure a width and a height here (if there aren't any width and height attributes within the stylesheet for this block element). Check the examples without the script to see the difference.
 
 ### callback:
 
@@ -112,7 +102,7 @@ Optional. Define wether text will be aligned to the inside or the outside of the
 
 ## Configuring a warp around a bezier curve:
 
-In this case an array representing the path must be assigned to the "path" property. The array will be formatted according the HTML5 canvas  "moveTo" and "bezieCurveTo"- commands: 
+In this case an array representing the path must be assigned to the "path" property. The array will be formatted according the HTML5 canvas  "moveTo" and "bezierCurveTo"- commands: 
 
 - a canvas:
 
@@ -139,7 +129,7 @@ These properties are optional and can be added to the configuration object:
 
 #### bezAccuracy (optional): 
 
-defines the accuracy of text metrics on a bezier curve. Default value is 0.004. Usually values between 0.002 - 0.006 are o.k. most of the time, but for small text it can be necessary to use smaller values.
+Defines the accuracy of text metrics on a bezier curve. If kerning looks bad than decreasing this number can help. Default value is 0.004. Rule of thumb: the smaller the text, the smaller this number should be. If n = estimated number of letters, the value should be equal or below 1/n.
 
 Be cautious: a smaller value means more computations so text needs more time for rendering.
 
@@ -150,6 +140,13 @@ Well, reverts the direction of a bezier.
 ## Some notes:
 
 Bezier calculations can be computationally expensive. Avoid long texts. Paths should be as simple as possible, with only as much segments as absolutely needed.
+
+## New in v0.3.0:
+
+- "width" and "height" are deprecated. Put "width" and "height" attributes into the "css" config instead.
+- "kerning" is deprecated. Use "letter-spacing" in your CSS for kerning. If you need to provide a different kerning for warped text than for unwarped text (in case user has switched off javascript) put a new letter-spacing into "css" config.
+- per default text-shadows now appear as if a global light source has been applied (via "fixShadow", see above).
+- speed improvements (100%-300% depending on browser) for bezier warping.
 
 ## Outlook:
 

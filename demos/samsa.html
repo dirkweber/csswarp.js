@@ -13,11 +13,19 @@
 	}
 	
 	</style>
-		<script src="js/csswarp.0.2.6.js"></script>
+		<script src="js/csswarp.0.3.0.js"></script>
         
         <script>
+        
+        	// ATTENTION! Start warping only, when fonts are *completely* loaded!
+        	// This is Important. If you warp too early, there will be erroneous calculations of text metrics.
+        	
+        	//Learn about the Google WebFontLoader here:
+        	//https://developers.google.com/webfonts/docs/webfont_loader
+        	
           	WebFontConfig = {
         	       google: { families: ['Anton::latin'] },
+        	       
         	        fontactive: function(fontFamily, fontDescription) {
         	        	cssWarp(anton);
         	       	}
@@ -97,12 +105,9 @@
         		[286.7, 279.9, 294.2, 272.4, 303.4, 272.4]],
         		targets		: ".anton",
         		rotationMode: "rotate",
-        		bezAccuracy	: 0.002,
+        		bezAccuracy	: 0.0025,
         		revertBezier: false,
-        		kerning		: "1px",
-        		width		: "610px",
-        		height		: "610px",
-        		css			: "margin: 50px auto; display: block"
+        		css			: "margin: 0px auto;display: block; height: 500px; width: 400px;"
         		};
         		
         </script>
