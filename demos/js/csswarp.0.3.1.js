@@ -1,5 +1,5 @@
 /*
- * 	csswarp.js 0.1
+ * 	csswarp.js 0.3.1
  *	written by Dirk Weber	
  *	http://www.eleqtriq.com
  *	Copyright (c) 2012 Dirk Weber (http://www.eleqtriq.com)
@@ -135,8 +135,8 @@
 					THIS.config.targets[i].style.cssText = customCSS;
 				}
 				
-				if(!(THIS.config.fixshadow === false)){
-					THIS.config.shadows = [];
+
+				if(!(THIS.config.fixshadow === false)){					THIS.config.shadows = [];
 					shadowVal = getStyle(THIS.config.targets[i], "text-shadow");
 
 					if(shadowVal !== "" && shadowVal !== "none"){
@@ -402,9 +402,9 @@
  			}
  			
  			letters[index].elem.style.cssText+= warpCSS(letters, cssTransform);
- 
+ 			
  			if(THIS.config.hasOwnProperty("shadows") && THIS.config.shadows.length>0 ){
- 				letters[index].elem.style.cssText+= fixShadow(angle);
+ 				letters[index].elem.style.cssText+= "text-shadow: "+fixShadow(angle);
  			}	
  		}
  		
