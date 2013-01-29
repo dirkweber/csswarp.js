@@ -330,15 +330,15 @@
  					
  				if(circle.angle){
  					if(!/rad/gi.test(THIS.config.path.angle)){
- 						circle.angle = parseFloat(circle.angle) * Math.PI/180;
+ 						circle.calculatedAngle = parseFloat(circle.angle) * Math.PI/180;
  					}else{
- 						circle.angle = parseFloat(circle.angle);
+ 						circle.calculatedAngle = parseFloat(circle.angle);
  					}
  				}else{
- 					circle.angle = 0;
+ 					circle.calculatedAngle = 0;
  				}
  					
- 				circle.angle-= Math.PI/2;
+ 				circle.calculatedAngle-= Math.PI/2;
  				
  				switch(circle.textPosition){
  					case "inside":
@@ -363,7 +363,7 @@
  				}
  
   				function polarCoords(arc){
-  					var angle = arc/circle.radius+circle.angle,
+  					var angle = arc/circle.radius+circle.calculatedAngle,
   						cos = Math.cos(angle),
   						sin = Math.sin(angle),
   						x	= circle.radius*cos+circle.center[0],
