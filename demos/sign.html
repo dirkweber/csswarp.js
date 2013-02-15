@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Dynamic CSS Warp</title>
+<link rel='stylesheet' type='text/css' href='css/sign.css'>
+		<script src="js/csswarp.0.6.js"></script>
+        
+        <script>
+         // ATTENTION! Wait until fonts are *completely* loaded!
+         // This is Important. If you warp too early, text metrics will be calculated erroneously.
+         
+         //Learn about the Google WebFontLoader here:
+         //https://developers.google.com/webfonts/docs/webfont_loader
+        
+        var warpactive = true; //I put this in here for testing purposes. 
+        						//If you want to see how this site will look when no warping has happened, 
+        						//e.g. when the browser doesn't have css transforms, set it to 'false'.
+        						//You will see that It's perfectly possible to control the look of your unwarped and warped text with the 'css' and callback properties.
+        						
+        if(!warpactive){
+        	  	var css = document.createElement('style')
+        	  	css.innerHTML = "#bree, .anton, #ampersand, .yesteryear{opacity: 1;}";
+        	  	document.getElementsByTagName("head")[0].appendChild(css);
+        }
+        
+        	WebFontConfig = {
+        	       google: { families: ['Bree+Serif::latin','Playfair+Display:400italic:latin&text=&', 'Yesteryear::latin&text=No images involved', 'Anton::latin&text=Selctab si'] },
+					
+        	        fontactive: function(fontFamily, fontDescription) {
+        	        	if(warpactive){
+         	        		switch (fontFamily.toLowerCase()){
+        	        			case "bree serif":
+        	        	    		cssWarp(bree);
+        	        	    		break;
+        	        	    	case "yesteryear":
+        	        	    		cssWarp(yesteryear);
+        	        	    		break;
+        	        	    	case "anton":
+        	        	    		cssWarp(anton_l, anton_r);
+        	        	    		break;
+        	        	  }
+        	        	}
+        	       	}
+        	      };
+        	             	     
+        	     (function() {
+        	       var wf = document.createElement('script');
+        	       wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        	           '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        	       wf.type = 'text/javascript';
+        	       wf.async = 'true';
+        	       var s = document.getElementsByTagName('script')[0];
+        	       s.parentNode.insertBefore(wf, s);
+        	     })();
+        	     
+        	//configuring the warps:
+        	     
+         	yesteryear={
+        		path		: [[73.9, 400.5],
+        					  [105.3, 370.4, 196.1, 314.2, 276.3, 359.7],
+        					  [342.9, 397.5, 398.6, 375.5, 424.7, 327.4]],
+        		targets		: ".yesteryear",
+        		rotationMode: "skew",
+        		css			: "opacity: 1; position: absolute; width: 400px; height: 100px; top: 17px; left: -38px; margin: 0px;"
+              };
+        		
+        	bree = {
+        		path		: {
+        						radius: 150,
+        						angle : "0deg",
+        						align: "center",
+        						textPosition: "outside"
+        						},
+        		targets		: "#bree",
+        		rotationMode: "rotate",
+        		css			: "opacity: 1; position: absolute; width: 280px; height: 280px; top: 0px; left: 0px; -webkit-border-radius: 50%;-ms-border-radius: 50%; -moz-border-radius: 50%;-o-border-radius: 50%; border-radius: 50%;background-color: #E2C359; border: solid #740F1D 60px;-webkit-box-shadow: 4px 4px 6px #470F15 inset, 12px 12px 10px rgba(0,0,0,0.7);-moz-box-shadow: 4px 4px 6px #470F15 inset, 12px 12px 10px rgba(0,0,0,0.7);-ms-box-shadow: 4px 4px 6px #470F15 inset, 12px 12px 10px rgba(0,0,0,0.7);-o-box-shadow: 4px 4px 6px #470F15 inset, 12px 12px 10px rgba(0,0,0,0.7);box-shadow: 4px 4px 6px #470F15 inset, 12px 12px 10px rgba(0,0,0,0.7);background: rgb(226,195,89); background: -moz-radial-gradient(center, ellipse cover, rgba(226,195,89,1) 47%, rgba(151,115,33,1) 130%); background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(47%,rgba(226,195,89,1)), color-stop(130%,rgba(151,115,33,1))); background: -webkit-radial-gradient(center, ellipse cover, rgba(226,195,89,1) 47%,rgba(151,115,33,1) 130%); background: -o-radial-gradient(center, ellipse cover, rgba(226,195,89,1) 47%,rgba(151,115,33,1) 130%); background: -ms-radial-gradient(center, ellipse cover, rgba(226,195,89,1) 47%,rgba(151,115,33,1) 130%); background: radial-gradient(center, ellipse cover, rgba(226,195,89,1) 47%,rgba(151,115,33,1) 130%);",
+        		
+        		callback	: function(){setStyles();}
+        		};
+        	        		
+        	anton_l={
+        		path		: {
+        						radius: 130,
+        						angle : "0deg",
+        						align: "center",
+        						textPosition: "outside"
+        						},
+        		targets		: ".anton_l",
+        		rotationMode: "skew",
+        		css			: "opacity: 1; display: inline-block; position: absolute; z-index: 10; top: 40px; left: 0px; width: 400px; height: 400px;"
+        		};
+        	
+        	anton_r={
+        		path		: {
+        						radius: 130,
+        						angle : "180deg",
+        						align: "center",
+        						textPosition: "inside"
+        						},
+        		targets		: ".anton_r",
+        		rotationMode: "skew",
+        		css			: "opacity: 1; position: absolute; top: 0px; left: 0px; width: 400px; height: 400px;"
+        		};
+        		
+        		function setStyles(){
+        			var demo 		= document.getElementById("demo"),
+        				ampersand 	= document.getElementById("ampersand");
+
+        			demo.style.cssText+= "width : 400px; min-width: 0px; margin: 50px auto; border: none; background: none;";
+        			ampersand.style.cssText+= "opacity: 1; position: absolute; top: 80px; left:  0px; margin: 0px; color:  #740F1D; width: 400px;";
+        		}
+        </script>
+        <noscript>
+        	<!-- Make sure that text shows up when javascript is disabled-->
+        	<style>
+        		#bree{opacity: 1;}
+        		.anton_l{opacity: 1;}
+        		.anton_r{opacity: 1;}
+        		#ampersand{opacity: 1;}
+        		.yesteryear{opacity: 1;}
+        	</style>
+        </noscript>
+</head>
+
+<body id="body">
+
+<div id="demo" class="demo">
+	<h2 id="bree" class="fadeIn">Some sexy warped Text</h2>
+	<h3><span class="anton anton_l fadeIn">Selectable</span>
+	<span id="ampersand" class="fadeIn">&amp;</span>
+	<span class="anton anton_r fadeIn">accessible</span></h3>
+	<h3 class="yesteryear fadeIn">No images involved</h3>
+</div>
+</body>
+</html>

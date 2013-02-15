@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CSSWARP.JS: right to left text examples</title>
+	<style>
+	body{
+		background: white; 
+		}
+		
+	h1{
+		font: 30px 'Bree Serif';
+	}
+		
+	.bree{
+		margin:  0px;
+		display: block;
+		top:  0px;
+		font: 20px 'Bree Serif';
+		color:  white;
+		text-shadow: 3px 3px 0px rgba(0,0,0,0.4);
+		letter-spacing: 2px;
+	}	
+	.rtl{
+		direction: rtl;
+		unicode-bidi: bidi-override;
+	}
+	
+	.box{
+		background-color: #e2ad75;
+		border: solid #e2ad75 50px;
+		margin:  10px;
+		display:  inline-block;
+		visibility:  hidden;
+	}
+	</style>
+	<noscript>
+		<style>.box{visibility: visible;}</style>
+	</noscript>
+
+		<script src="js/csswarp.0.6.js"></script>
+        
+        <script>
+         // ATTENTION! Wait until fonts are *completely* loaded!
+         // This is Important. If you warp too early, text metrics will be calculated erroneously.
+         
+         //Learn about the Google WebFontLoader here:
+         //https://developers.google.com/webfonts/docs/webfont_loader
+        (function(){
+        	WebFontConfig = {
+        	       google: { families: ['Bree+Serif::latin'] },
+					
+        	        fontactive: function(fontFamily, fontDescription) {
+         	        	cssWarp(bezltr, bezltrrgt, bezrevltr, bezrevltrrgt, circleoutsltr,circleinsltr,circlelftinsltr, circlelftoutsltr,circlergtoutsltr,circlergtinsltr);
+           	       	}
+          	     };
+        	     
+        	    
+        	           	     
+        	     (function() {
+        	       var wf = document.createElement('script');
+        	       wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        	           '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        	       wf.type = 'text/javascript';
+        	       wf.async = 'true';
+        	       var s = document.getElementsByTagName('script')[0];
+        	       s.parentNode.insertBefore(wf, s);
+        	     })();
+        	     
+        	     var bezier =  [[0.4, 67.4],
+        		 				[24.4, 30.1, 121.8, 32.1, 196.4, 57.4],
+        		 				[271.1, 82.8, 283.9, 91.8, 328.4, 84.1],
+        		 				[363.1, 78.1, 397.8, 46.8, 389.8, 0.1]];
+        		 				
+        		        		
+        		 bezltr = {
+        		         		path		: bezier,        		        
+        		         		targets		: ".bezltr",
+        		         		showPath	: {thickness: 1, color: "white"},
+        		         		indent		: "1em",
+        		         		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		         		};
+        		         		
+        		 bezltrrgt = {
+        		         		path		: bezier,        		        
+        		         		targets		: ".bezltrrgt",
+        		         		align		: "right",
+        		         		showPath	: {thickness: 1, color: "white"},
+        		         		indent		: "1em",
+        		         		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		         		};
+        		         		
+        		bezrevltr = {
+        		        		path		: bezier,        		        
+        		        		revertBezier: true,						
+        		        		targets		: ".bezrevltr",
+        		        		showPath	: {thickness: 1, color: "white"},
+        		        		indent		: "1em",
+        		        		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		        		};
+        		
+        		bezrevltrrgt = {
+        		        		path		: bezier,        		        
+           		        		revertBezier: true,		
+        		        		targets		: ".bezrevltrrgt",
+        		        		align		: "right",
+        		        		showPath	: {thickness: 1, color: "white"},
+        		        		indent		: "1em",
+        		        		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		        		};  
+        		 
+        		 circleinsltr = {
+        		         		path		: {
+        		         						radius: 100,
+        		         						angle : "0deg",
+        		         						textPosition: "inside"
+        		         						},        		        
+        		         		
+        		         		targets		: ".circleinsltr",
+        		         		align		: "center",
+        		         		showPath	: {thickness: 1, color: "white"},
+        		         		indent		: "0em",
+        		         		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		         		};  
+        		  
+        		  circleoutsltr = {
+        		          		path		: {
+        		          						radius: 100,
+        		          						angle : "0deg",
+        		          						textPosition: "outside"
+        		          						},        		        
+        		          		
+        		          		targets		: ".circleoutsltr",
+        		          		align		: "center",
+        		          		showPath	: {thickness: 1, color: "white"},
+        		          		indent		: "0em",
+        		          		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+         		          		};
+        		          		 
+        		   circlelftinsltr = {
+        		           		path		: {
+        		           						radius: 100,
+        		           						angle : "0deg",
+        		           						textPosition: "inside"
+        		           						},        		        
+        		           		
+        		           		targets		: ".circlelftinsltr",
+        		           		align		: "left",
+        		           		showPath	: {thickness: 1, color: "white"},
+        		           		indent		: "0em",
+        		           		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		           		
+        		           		};  
+        		    
+        		    circlelftoutsltr = {
+        		            		path		: {
+        		            						radius: 100,
+        		            						angle : "0deg",
+        		            						textPosition: "outside"
+        		            						},        		        
+        		            		
+        		            		targets		: ".circlelftoutsltr",
+        		            		align		: "left",
+        		            		showPath	: {thickness: 1, color: "white"},
+        		            		indent		: "0em",
+        		            		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		            		};  
+        		    
+        		    circlergtinsltr = {
+        		            		path		: {
+        		            						radius: 100,
+        		            						angle : "0deg",
+        		            						textPosition: "inside"
+        		            						},        		        
+        		            		
+        		            		targets		: ".circlergtinsltr",
+        		            		align		: "right",
+        		            		showPath	: {thickness: 1, color: "white"},
+        		            		indent		: "0em",
+        		            		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		            		};  
+        		     
+        		     circlergtoutsltr = {
+        		             		path		: {
+        		             						radius: 100,
+        		             						angle : "0deg",
+        		             						textPosition: "outside"
+        		             						},        		        
+        		             		
+        		             		targets		: ".circlergtoutsltr",
+        		             		align		: "right",
+        		             		showPath	: {thickness: 1, color: "white"},
+        		             		indent		: "0em",
+        		             		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		             		};  
+
+        		})();
+        </script>
+        
+</head>
+
+<body id="body">
+<h1>csswarp.js: right to left text demo</h1>	
+	<h2 class="bree box rtl bezltr">Bezier rtl no alignment</h2>
+	<h2 class="bree box rtl bezltrrgt">Bezier rtl aligned right</h2>
+	<h2 class="bree box rtl bezrevltr">Bezier reverted rtl</h2>
+	<h2 class="bree box rtl bezrevltrrgt">Bezier reverted rtl aligned right</h2>
+	<hr>
+	
+	
+	<h2 class="bree box rtl circleoutsltr">Circle rtl outside center</h2>
+	<h2 class="bree box rtl circleinsltr">Circle rtl inside center</h2>
+	<h2 class="bree box rtl circlelftoutsltr">Circle rtl aligned left outside center</h2>
+	<h2 class="bree box rtl circlelftinsltr">Circle rtl aligned left inside center</h2>	
+	<h2 class="bree box rtl circlergtoutsltr">Circle rtl aligned right outside center</h2>
+	<h2 class="bree box rtl circlergtinsltr">Circle rtl aligned right inside center</h2>
+ 	</body>
+</html>

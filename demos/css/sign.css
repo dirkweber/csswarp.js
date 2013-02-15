@@ -1,4 +1,9 @@
+html{
+	height:  100%;
+}
+
 body{
+	height:  100%;
 	background: #541910;  
 	background: -moz-radial-gradient(center, ellipse cover, rgba(61,44,12,0) 0%, rgba(61,44,12,1) 100%),
 	-moz-linear-gradient(left,  #541910 0%, #541910 50%, #a07335 50%, #a07335 100%, #a07335 100%, #a07335 100%, #a07335 100%, #a07335 100%, #a07335 100%, #5b371e 100%, #541910 100%); 
@@ -17,17 +22,21 @@ body{
 	-ms-background-size: 100% 200%,  30px 50px;
 	-o-background-size: 100% 200%,  30px 50px;
 	background-size: 100% 200%, 30px 50px;
+	text-align: center;
 	}
+
 
 .yesteryear {
 	position:  relative;
 	margin:  -50px 0px;
 	font: 56px 'Yesteryear';
-	text-shadow: 12px 8px 5px rgba(0,0,0,0.7);
+	text-shadow: rgba(0,0,0,0.8) 12px 8px 5px;
 	color:  #8CB6A7;
-}
+	opacity: 0;
+	}
 	
 .anton {
+	display: inline-block;
 	vertical-align: 40px;
 	top:  -30px;
 	font: 50px 'Anton', sans-serif;
@@ -35,26 +44,33 @@ body{
 	color:  #2d7a5e;
 	letter-spacing: 6px;
 	text-shadow: 0.1em 0em 0px #740F1D;
+	opacity:  0;
+	margin: 0px -;
 }
 
-.anton_l {
-	
-	display:  inline-block;
-}	
-
-.anton_r {
-display:  inline-block;
+.fadeIn{
+	-webkit-transition:  opacity 0.5s ease-in;
+	-moz-transition:  opacity 0.5s ease-in;
+	-ms-transition:  opacity 0.5s ease-in;
+	-o-transition:  opacity 0.5s ease-in;
+	transition:  opacity 0.5s ease-in;
 }
-  
+
 #ampersand{
+	position:  relative;
 	display:  inline-block;
-	margin:  -70px 8px 0px 5px;
+ 	margin:  -70px 8px 0px 5px;
 	font: 170px 'Playfair Display';
 	font-style: italic;
 	color:  #740F1D;
 	color:  white;
 	text-align: center;
 	text-shadow: 4px 4px 0px #2d7a5e;
+	opacity: 0;
+	}
+
+#bree{
+	opacity: 0;
 }
 
 #bree, .bree{
@@ -66,17 +82,22 @@ display:  inline-block;
 	color:  #F4E8C0;
 	text-shadow: 3px 3px 0px #977321;
 	letter-spacing: 1px;
+ }
+h3:nth-of-type(1){
+	text-align: center;
 }
-
 #demo{
 	position:  relative;
-	height: 400px;
 	margin: 50px auto;
 	text-align: center;
 	min-width:  600px;
 	line-height: 0;
-}
 
-h2, h3, span{
-		z-index: 10;
+	/*border:  solid #E2C359 10px;
+	background-color: #740F1D;*/
+	display: inline-block;
+	padding:  10px;
+	position:  relative;
+	height:  auto;
+	padding-bottom:  50px;
 }

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CSSWARP.JS: attach text to circle examples</title>
+	<style>
+	body{
+		background: white; 
+		}
+		
+	h1{
+		font: 30px 'Bree Serif';
+	}
+	
+	.bree{
+		margin:  0px;
+		display: block;
+		top:  0px;
+		font: 20px 'Bree Serif';
+		color:  white;
+		text-shadow: 3px 3px 0px rgba(0,0,0,0.4);
+		letter-spacing: 2px;
+	}
+	
+	.box{
+		background-color: #e2ad75;
+		border: solid #e2ad75 50px;
+		margin:  10px;
+		display:  inline-block;
+		visibility:  hidden;
+	}
+	</style>
+	<noscript>
+		<!-- Make sure that text shows up when javasript is disabled-->
+		<style>.box{visibility: visible;}</style>
+	</noscript>
+
+		<script src="js/csswarp.0.6.js"></script>
+        
+        <script>
+         // ATTENTION! Wait until fonts are *completely* loaded!
+         // This is Important. If you warp too early, text metrics will be calculated erroneously.
+         
+         //Learn about the Google WebFontLoader here:
+         //https://developers.google.com/webfonts/docs/webfont_loader
+        (function(){
+        	WebFontConfig = {
+        	       google: { families: ['Bree+Serif::latin'] },
+					
+        	        fontactive: function(fontFamily, fontDescription) {
+        	        	    	cssWarp(normal, normalinside, alignedleft, alignedleftinside, alignedleft90deg, alignedleft90deginside, alignedright, alignedrightinside, alignedright90deg, alignedright90deginside, normalskewed, normalstep);
+        	       	}
+          	     };
+        	     
+        	    
+        	           	     
+        	     (function() {
+        	       var wf = document.createElement('script');
+        	       wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        	           '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        	       wf.type = 'text/javascript';
+        	       wf.async = 'true';
+        	       var s = document.getElementsByTagName('script')[0];
+        	       s.parentNode.insertBefore(wf, s);
+        	     })();
+        	             		         		 
+        		 normal = {
+        		         		path		: {
+        		         						radius: 100,
+        		         						},        		        
+        		         		
+        		         		targets		: ".normal",
+        		         		showPath	: {thickness: 1, color: "white"},
+        		         		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		         		};  
+        		  
+        		  normalinside = {
+        		          		path		: {
+        		          						radius: 100,
+        		          						textPosition: "inside"
+        		          						},        		        
+        		          		
+        		          		targets		: ".normalinside",
+        		          		showPath	: {thickness: 1, color: "white"},
+        		          		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		          		}; 
+        		          		
+        		  alignedleft = {
+        		          		path		: {
+        		          						radius: 100,
+        		          						},        		        
+        		          		
+        		          		targets		: ".alignedleft",
+        		          		align		: "left",
+        		          		showPath	: {thickness: 1, color: "white"},
+        		          		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+         		          		};
+        		          		 
+        		   alignedleftinside = {
+        		           		path		: {
+        		           						radius: 100,
+        		           						textPosition: "inside"
+         		           						},        		        
+        		           		
+        		           		targets		: ".alignedleftinside",
+        		           		align		: "left",
+        		           		showPath	: {thickness: 1, color: "white"},
+        		           		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		           		
+        		           		};   
+        		            		
+        		    alignedleft90deg = {
+        		            		path		: {
+        		            						radius: 100,
+        		            						angle: "90deg"
+        		            						},        		        
+        		            		
+        		            		targets		: ".alignedleft90deg",
+         		            		align		: "left",
+        		            		showPath	: {thickness: 1, color: "white"},
+         		            		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		            		}; 
+        		    
+        		    alignedleft90deginside = {
+        		            		path		: {
+        		            						radius: 100,
+        		            						angle : "90deg",
+        		            						textPosition: "inside"
+        		            						},        		        
+        		            		
+        		            		targets		: ".alignedleft90deginside",
+         		            		align		: "left",
+        		            		showPath	: {thickness: 1, color: "white"},
+         		            		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		            		};  
+        		     
+        		     alignedright = {
+        		             		path		: {
+        		             						radius: 100,
+        		             						},        		        
+        		             		
+        		             		targets		: ".alignedright",
+        		             		align		: "right",
+        		             		showPath	: {thickness: 1, color: "white"},
+         		             		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		             		};  
+        		     
+        		     alignedrightinside = {
+        		             		path		: {
+        		             						radius: 100,
+        		             						textPosition: "inside"
+        		             						},        		        
+        		             		
+        		             		targets		: ".alignedrightinside",
+        		             		align		: "right",
+        		             		showPath	: {thickness: 1, color: "white"},
+         		             		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		             		};  
+        		     alignedright90deg = {
+        		             		path		: {
+        		             						radius: 100,
+        		             						angle : "90deg",
+        		             						},        		        
+        		             		targets		: ".alignedright90deg",
+        		             		align		: "right",
+        		             		showPath	: {thickness: 1, color: "white"},
+         		             		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		             		};  
+        		     
+        		     alignedright90deginside = {
+        		             		path		: {
+        		             						radius: 100,
+        		             						angle : "90deg",
+        		             						textPosition: "inside"
+        		             						},        		        
+        		             		
+        		             		targets		: ".alignedright90deginside",
+        		             		align		: "right",
+        		             		showPath	: {thickness: 1, color: "white"},
+         		             		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+        		             		};  
+					
+					normalskewed = {
+					        		path		: {
+					        						radius: 100,
+					        						},        		        
+					        		
+					        		targets		: ".normalskewed",
+					        		rotationMode: "skew",
+					        		showPath	: {thickness: 1, color: "white"},
+					        		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+					        		};
+					normalstep = {
+					        		path		: {
+					        						radius: 100,
+					        						},        		        
+					        		
+					        		targets		: ".normalstep",
+					        		rotationMode: "step",
+					        		fixshadow	: false,
+					        		showPath	: {thickness: 1, color: "white"},
+					        		css			: "visibility: visible; position: relative; top: 0px; width: 200px; height: 200px;",
+					        		};  
+        		})();
+        </script>
+        
+</head>
+
+<body id="body">
+<h1>csswarp.js: attach text to circle examples</h1>
+	<h2 class="bree box normal">No alignement (will be centered)</h2>
+	<h2 class="bree box normalinside">No alignment, text inside</h2>
+	<h2 class="bree box alignedleft">Aligned left</h2>
+	<h2 class="bree box alignedleftinside">Aligned left, text inside</h2>	
+	<h2 class="bree box alignedleft90deg">Aligned left, angle 90 deg</h2>
+	<h2 class="bree box alignedleft90deginside">Aligned left, text inside, angle 90 deg</h2>	
+	<h2 class="bree box alignedright">Aligned right, text outside</h2>
+	<h2 class="bree box alignedrightinside">Aligned right, text inside</h2>
+	<h2 class="bree box alignedright90deg">Aligned right, text outside, angle 90 deg</h2>
+	<h2 class="bree box alignedright90deginside">Aligned right, text inside, angle 90 deg</h2>
+	
+	<h2 class="bree box normalskewed">No alignment, rotationmode "skew"</h2>
+	<h2 class="bree box normalstep">No alignment, rotationmode "step"</h2>
+ 	</body>
+</html>
+
+
+
+

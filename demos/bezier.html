@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>CSSWARP.JS: attach text to bezier curve</title>
+	<style>
+	body{
+		background: white; 
+		}
+		
+	h1{
+		font: 30px 'Bree Serif';
+	}
+	
+	.bree{
+		margin:  0px;
+		display: block;
+		top:  0px;
+		font: 20px 'Bree Serif';
+		color:  white;
+		text-shadow: 3px 3px 0px rgba(0,0,0,0.4);
+		letter-spacing: 2px;
+	}
+	
+	.box{
+		background-color: #e2ad75;
+		border: solid #e2ad75 50px;
+		margin:  10px;
+		display:  inline-block;
+		visibility:  hidden;
+	}
+	</style>
+	<noscript>
+		<style>.box{visibility: visible;}</style>
+	</noscript>
+
+		<script src="js/csswarp.0.6.js"></script>
+        
+        <script>
+         // ATTENTION! Wait until fonts are *completely* loaded!
+         // This is Important. If you warp too early, text metrics will be calculated erroneously.
+         
+         //Learn about the Google WebFontLoader here:
+         //https://developers.google.com/webfonts/docs/webfont_loader
+        (function(){
+        	WebFontConfig = {
+        	       google: { families: ['Bree+Serif::latin'] },
+					
+        	        fontactive: function(fontFamily, fontDescription) {
+        	        	    	cssWarp(bez, bezrgt, bezrev,bezrevrgt, bezskew, bezstep);
+        	       	}
+          	     };
+        	     
+        	    
+        	           	     
+        	     (function() {
+        	       var wf = document.createElement('script');
+        	       wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        	           '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        	       wf.type = 'text/javascript';
+        	       wf.async = 'true';
+        	       var s = document.getElementsByTagName('script')[0];
+        	       s.parentNode.insertBefore(wf, s);
+        	     })();
+        	     
+        	     var bezier =  [[0.4, 67.4],
+        		 				[24.4, 30.1, 121.8, 32.1, 196.4, 57.4],
+        		 				[271.1, 82.8, 283.9, 91.8, 328.4, 84.1],
+        		 				[363.1, 78.1, 397.8, 46.8, 389.8, 0.1]];
+        		 				
+         		 var bez = {
+        		         		path		: bezier,        		        
+        		         		targets		: ".bez",
+        		         		showPath	: {thickness: 1, color: "white"},
+        		         		indent		: "1em",
+        		         		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		         		};
+        		 
+        		 var bezrgt = {
+        		         		path		: bezier,        		        
+        		         		targets		: ".bezrgt",
+        		         		align		: "right",
+        		         		showPath	: {thickness: 1, color: "white"},
+        		         		indent		: "1em",
+        		         		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		         		};
+        		         		         		
+        		var bezrev = {
+        		        		path		: bezier,        		        
+        		        		revertBezier: true,						
+        		        		targets		: ".bezrev",
+        		        		showPath	: {thickness: 1, color: "white"},
+        		        		indent		: "1em",
+        		        		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		        		};
+        		
+        		var bezrevrgt = {
+        		        		path		: bezier,        		        
+           		        		revertBezier: true,		
+        		        		targets		: ".bezrevrgt",
+        		        		align		: "right",
+        		        		showPath	: {thickness: 1, color: "white"},
+        		        		indent		: "1em",
+        		        		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		        		};  
+        		 
+        		
+        		var bezskew = {
+        		        		path		: bezier,        		        
+        		        		targets		: ".bezskew",
+        		        		rotationMode: "skew",
+         		        		showPath	: {thickness: 1, color: "white"},
+        		        		indent		: "1em",
+        		        		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		        		};
+        		var bezstep = {
+        		        		path		: bezier,        		        
+        		        		targets		: ".bezstep",
+        		        		rotationMode: "step",
+        			        	showPath	: {thickness: 1, color: "white"},
+        		        		indent		: "1em",
+        		        		fixshadow	: false,
+        		        		css			: "visibility: visible; position: relative; top: 0px; width: 400px; height: 100px;",
+        		        		};  
+        		})();
+        </script>
+        
+</head>
+
+<body id="body">
+<h1>csswarp.js: attach text to bezier curve demo</h1>
+ 	<h2 class="bree box bez">Bezier no alignment</h2>
+	<h2 class="bree box bezrgt">Bezier aligned right</h2>
+	<h2 class="bree box bezrev">Bezier reverted no alignment</h2>
+	<h2 class="bree box bezrevrgt">Bezier reverted aligned right</h2>
+	<h2 class="bree box bezskew">Bezier no alignment, skewed</h2>
+	<h2 class="bree box bezstep">Bezier no alignment, stepwise</h2>
+	</body>
+</html>
