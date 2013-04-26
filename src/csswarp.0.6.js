@@ -542,20 +542,18 @@
 			
 		function calcBaseline(){
 				var testDiv = document.createElement("div"),
-					img = document.createElement("img"),
+					span = document.createElement("span"),
 					lineHeight = getStyle(node, "lineHeight"),
 					base;
 					
-				img.width = 1;
-				img.height = 1;
-				img.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
-				img.style.verticalAlign = "baseline";
-				img.style.display = "inline";	
+				span.innerHTML = 'A';
+				span.style.verticalAlign = "baseline";
+				span.style.fontSize = "0px";
 				testDiv.style.cssText = baseCSS+'height:'+letters[0].height+';line-height:'+lineHeight+'px;';
 				testDiv.innerHTML="M";
-				testDiv.appendChild(img);
+				testDiv.appendChild(span);
 				node.appendChild(testDiv);
-				base = img.offsetTop;
+				base = span.offsetTop;
 				node.removeChild(testDiv);
 				return base;
 		}
