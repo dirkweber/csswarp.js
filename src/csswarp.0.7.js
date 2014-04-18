@@ -1,5 +1,5 @@
 /*
- * 	csswarp.js 0.6
+ * 	csswarp.js 0.7
  *	written by Dirk Weber	
  *	http://www.eleqtriq.com
  *	Copyright (c) 2013 Dirk Weber (http://www.eleqtriq.com)
@@ -17,7 +17,7 @@
 	if(/webkit/gi.test(userAgent)){
 	    prefix = "-webkit-";
 	    cssPref = "Webkit";
-	}else if(/msie/gi.test(userAgent)){
+	}else if(/msie | trident/gi.test(userAgent)){
 	    prefix = "-ms-";
 	    cssPref = "ms";
 	}else if(/mozilla/gi.test(userAgent)){
@@ -29,7 +29,7 @@
 	}else{
 	    prefix = cssPref = "";
 	}
-	
+
 	hasTransform = (function(){
 		var elem = document.createElement("div"),
 			html = document.getElementsByTagName("html")[0],
@@ -376,7 +376,7 @@
 						Coordinates on the curve must be determined from a relative value "t" with t=0 as starting lenght of the bezier and t=1 as the end. We increase t by bezRes, calculate the coordinates, use some trigoneometry to evaluate the length of the line segment, and stop as soon as our calculated value is as long as the position of the letter. The coordinates at this value will be the coordinates of the letter, the angle of the tangetnt at this position will be used to calculate the transformation of the letter (rotation, skew) at this position.
 						*/
 						
-						for(var i=curveStepCount+bezRes; i<1; i+= bezRes){  
+						for(var i = curveStepCount+bezRes; i<1; i+= bezRes){  
 							ep 		= findPointOnCurve(segment,i);
 							length+= Math.sqrt(Math.pow((sp[0]-ep[0]),2) + Math.pow((sp[1]-ep[1]),2));
 							sp		= ep;
@@ -389,7 +389,7 @@
 						//so break the loop and move on to the next segment of our bezier.
 						//If there isn't any segment left, the text will be stripped here.
 						
-						if(i>=1){
+						if(i >= 1){
 							curveStepCount = arcStart = 0; 
 							increase = true;
 						}
