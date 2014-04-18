@@ -177,6 +177,9 @@ CSSWarp will look for the "direction" property in the CSS. When set to "rtl", te
 
 Bezier calculations can be computationally expensive. Avoid long texts. Paths should be as simple as possible, with only as much segments as absolutely needed.
 
+## New in v0.7.0:
+- browser detection for IE 11 fixed.
+
 ## New in v0.6.0:
 - right to left text (rtl) support.
 - right text alignment on bezier curves. "align" is now a global property and no longer declared within the circle element.
