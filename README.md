@@ -152,7 +152,7 @@ Be cautious: a smaller value means more computations so text needs more time for
 
 Well, reverts the direction of a bezier.
 
-## Prefenting FOUT (flash of unstyled text)
+## Preventing FOUT (flash of unstyled text)
 
 Before text will be warped all fonts must be loaded and then all the text metrics must be calculated. In the meantime text will appear unstyled and unwarped on the page. This can be very annoying, especially when warping takes a long time because of heavy font data, or complicated curves and/or long text (check "samsa.html" from the demos to see the effect in action).
 
